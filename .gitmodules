@@ -1,0 +1,9 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/Luw17/Eniwhere-Backend.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/Luw17/Eniwhere-web.git
+[submodule "landingpage"]
+	path = landingpage
+	url = https://github.com/Luw17/Enigma-landingpage.git
