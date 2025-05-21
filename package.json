@@ -1,0 +1,10 @@
+{
+  "name": "eniwhere-master",
+  "version": "1.0.0",
+  "scripts": {
+    "setup": "git submodule update --init --recursive && git submodule update --remote --merge && docker-compose up --build",
+    "update": "git submodule update --remote --merge && docker-compose up --build -d",
+    "start": "docker-compose up",
+    "stop": "docker-compose down"
+  }
+}
