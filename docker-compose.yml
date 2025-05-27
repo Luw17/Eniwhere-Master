@@ -5,6 +5,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    command: npm run start:dev
     volumes:
       - ./backend:/app
       - /app/node_modules
