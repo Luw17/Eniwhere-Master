@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./backend:/app
-      - /app/node_modules
+      - /app/node_modules          # Para preservar node_modules dentro do container
       - ./.env:/app/.env
     ports:
       - "3001:3000"
@@ -20,10 +20,11 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     volumes:
-      - ./frontend:/app              # Código da aplicação
-      - ./.env:/app/.env             # Variáveis de ambiente
+      - ./frontend:/app
+      - /app/node_modules          # Mantém node_modules do container intacto
+      - ./.env:/app/.env
     ports:
-      - "3000:5173"                  # Porta host:container (Vite expõe 5173)
+      - "3000:5173"
     env_file:
       - .env
 
@@ -32,9 +33,10 @@ services:
       context: ./landingpage
       dockerfile: Dockerfile
     volumes:
-      - ./landingpage:/app           # Código da aplicação
-      - ./.env:/app/.env             # Variáveis de ambiente
+      - ./landingpage:/app
+      - /app/node_modules          # Mesma regra para landingpage
+      - ./.env:/app/.env
     ports:
-      - "3002:5173"                  # Porta host:container (Vite expõe 5173)
+      - "3002:5173"
     env_file:
       - .env
