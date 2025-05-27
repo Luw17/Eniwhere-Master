@@ -6,11 +6,10 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     volumes:
-      - ./backend:/app
-      - /app/node_modules
-      - ./.env:/app/.env
+      - ./backend:/app                # Código da aplicação
+      - ./.env:/app/.env             # Variáveis de ambiente
     ports:
-      - "3001:3001"
+      - "3001:3000"                  # Porta host:container (Nest expõe 3000)
     env_file:
       - .env
 
@@ -19,11 +18,10 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - ./.env:/app/.env
+      - ./frontend:/app              # Código da aplicação
+      - ./.env:/app/.env             # Variáveis de ambiente
     ports:
-      - "3000:3000"
+      - "3000:5173"                  # Porta host:container (Vite expõe 5173)
     env_file:
       - .env
 
@@ -32,10 +30,9 @@ services:
       context: ./landingpage
       dockerfile: Dockerfile
     volumes:
-      - ./landingpage:/app
-      - /app/node_modules 
-      - ./.env:/app/.env
+      - ./landingpage:/app           # Código da aplicação
+      - ./.env:/app/.env             # Variáveis de ambiente
     ports:
-      - "3002:4000"
+      - "3002:5173"                  # Porta host:container (Vite expõe 5173)
     env_file:
       - .env
