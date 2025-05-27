@@ -1,7 +1,7 @@
 USE `db_eniwhere`;
 
 CREATE TABLE IF NOT EXISTS `addresses` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `postal_code` TEXT NOT NULL,
   `country` TEXT NOT NULL,
   `state` TEXT NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `addresses` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `app_users` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `document` VARCHAR(45) NOT NULL,
   `name` VARCHAR(45),
   `email` VARCHAR(45) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `app_users` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `devices` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `device_name` TEXT NOT NULL,
   `model` TEXT NOT NULL,
   `brand` TEXT NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `devices` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `user_devices` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `device_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `user_devices` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `stores` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` TEXT NOT NULL,
   `document` VARCHAR(45) NOT NULL,
   `email` TEXT NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `stores` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `store_workers` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45),
   `username` VARCHAR(45),
   `user_password` VARCHAR(45),
@@ -84,25 +84,25 @@ CREATE TABLE IF NOT EXISTS `store_workers` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `service_orders` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `user_device_id` INT NOT NULL,
   `worker_id` INT NOT NULL,
   `created_at` DATETIME NOT NULL,
-  `completed_at` DATETIME NOT NULL,
-  `feedback` INT NOT NULL,
-  `warranty` INT NOT NULL,
-  `cost` TEXT,
-  `work` TEXT,
-  `status` TEXT,
-  `deadline` DATE,
-  `problem` TEXT,
+  `completed_at` DATETIME NULL,
+  `feedback` INT NULL,
+  `warranty` INT NULL,
+  `cost` TEXT NULL,
+  `work` TEXT NULL,
+  `status` TEXT NULL,
+  `deadline` DATE NULL,
+  `problem` TEXT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_device_id`) REFERENCES `user_devices` (`id`),
   FOREIGN KEY (`worker_id`) REFERENCES `store_workers` (`id`)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `user_2fa_codes` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `code` TEXT NOT NULL,
   `validity` DATETIME NOT NULL,
   `user_id` INT NOT NULL,
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `user_2fa_codes` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `admins` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `username` TEXT NOT NULL,
   `user_password` TEXT NOT NULL,
   `code` TEXT NOT NULL,
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `admins` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `order_logs` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `service_order_id` INT NOT NULL,
   `cost` TEXT NOT NULL,
   `work` TEXT NOT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `order_logs` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `store_2fa_codes` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `code` TEXT NOT NULL,
   `validity` DATETIME NOT NULL,
   `store_id` INT NOT NULL,
@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `store_2fa_codes` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `admin_2fa_codes` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `code` TEXT NOT NULL,
   `validity` DATETIME NOT NULL,
   `admin_id` INT NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `admin_2fa_codes` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `pictures` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `service_order_id` INT NOT NULL,
   `path` VARCHAR(255),
   PRIMARY KEY (`id`),
@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `pictures` (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `worker_2fa_codes` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `code` TEXT,
   `validity` TEXT,
   `worker_id` INT NOT NULL,
@@ -229,3 +229,4 @@ INSERT INTO `pictures` (`id`, `service_order_id`, `path`) VALUES
 INSERT INTO `worker_2fa_codes` (`id`, `code`, `validity`, `worker_id`) VALUES
 (1, 'W2FA123', '2025-06-01 12:00:00', 1),
 (2, 'W2FA456', '2025-06-01 12:00:00', 2);
+
