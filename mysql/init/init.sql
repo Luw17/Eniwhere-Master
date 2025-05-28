@@ -87,13 +87,13 @@ CREATE TABLE IF NOT EXISTS `service_orders` (
   `user_device_id` INT NOT NULL,
   `worker_id` INT NOT NULL,
   `store_id` INT NOT NULL,
-  `created_at` DATETIME NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `completed_at` DATETIME NULL,
   `feedback` INT NULL,
   `warranty` INT NULL,
   `cost` VARCHAR(45) NULL,
   `work` VARCHAR(255) NULL,
-  `status` VARCHAR(100) NULL,
+  `status` VARCHAR(100) NULL DEFAULT 'pending',
   `deadline` DATE NULL,
   `problem` VARCHAR(255) NULL,
   PRIMARY KEY (`id`),
@@ -203,8 +203,8 @@ INSERT INTO `store_workers` (`id`, `name`, `username`, `user_password`, `store_i
 
 -- ALTERADO AQUI: adicionado o campo `store_id`
 INSERT INTO `service_orders` (`id`, `user_device_id`, `worker_id`, `store_id`, `created_at`, `completed_at`, `feedback`, `warranty`, `cost`, `work`, `status`, `deadline`, `problem`) VALUES
-(1, 1, 1, 1, '2025-05-01 10:00:00', '2025-05-03 15:00:00', 5, 12, '150.00', 'Troca de tela', 'Concluído', '2025-05-05', 'Tela quebrada'),
-(2, 2, 2, 2, '2025-05-02 11:00:00', NULL, 0, 0, NULL, NULL, 'Em andamento', '2025-05-10', 'Problema de bateria');
+(1, 1, 1, 1, '2025-05-01 10:00:00', '2025-05-03 15:00:00', 5, 12, '150.00', 'Troca de tela', 'done', '2025-05-05', 'Tela quebrada'),
+(2, 2, 2, 2, '2025-05-02 11:00:00', NULL, 0, 0, NULL, NULL, 'doing', '2025-05-10', 'Problema de bateria');
 
 INSERT INTO `user_2fa_codes` (`id`, `code`, `validity`, `user_id`) VALUES
 (1, '2FA123', '2025-06-01 12:00:00', 1),
