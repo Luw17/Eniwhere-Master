@@ -2,7 +2,7 @@ USE `eniwhere_db`;
 
 CREATE TABLE IF NOT EXISTS `addresses` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `postal_code` VARCHAR(20) NOT NULL,
+  `postal_code` VARCHAR(20) NULL,
   `country` VARCHAR(100) NOT NULL,
   `state` VARCHAR(100) NOT NULL,
   `city` VARCHAR(100) NOT NULL,
@@ -24,12 +24,12 @@ CREATE TABLE IF NOT EXISTS `app_users` (
   `number` VARCHAR(45),
   `code` VARCHAR(45),
   `validity` DATETIME,
-  `address_id` INT NOT NULL,
+  `address_id` INT NULL,
+  `active` TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE (`document`),
   UNIQUE (`email`),
   UNIQUE (`username`),
-  UNIQUE (`user_password`),
   FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`)
 ) ENGINE = InnoDB;
 
