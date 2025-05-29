@@ -1,0 +1,4 @@
+store ok
+device ok
+user ok
+ordens ok

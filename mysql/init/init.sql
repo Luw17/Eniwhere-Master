@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `devices` (
   `device_name` VARCHAR(100) NOT NULL,
   `model` VARCHAR(100) NOT NULL,
   `brand` VARCHAR(100) NOT NULL,
+  `active` TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
@@ -58,12 +59,12 @@ CREATE TABLE IF NOT EXISTS `stores` (
   `username` VARCHAR(45) NOT NULL,
   `user_password` VARCHAR(100) NOT NULL,
   `number` INT NOT NULL,
-  `code` VARCHAR(45) NOT NULL,
-  `validity` DATETIME NOT NULL,
+  `code` VARCHAR(45) NULL,
+  `validity` DATETIME NULL,
   `address_id` INT NOT NULL,
   `subscription_end` DATETIME NOT NULL,
   `analytics` TINYINT NOT NULL DEFAULT 0,
-  `storecol` VARCHAR(45),
+  `active` TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE (`document`),
   UNIQUE (`username`),
@@ -193,9 +194,9 @@ INSERT INTO `user_devices` (`id`, `user_id`, `device_id`) VALUES
 (1, 1, 1),
 (2, 2, 2);
 
-INSERT INTO `stores` (`id`, `name`, `document`, `email`, `username`, `user_password`, `number`, `code`, `validity`, `address_id`, `subscription_end`, `analytics`, `storecol`) VALUES
-(1, 'Loja Central', '12345678000199', 'contato@lojacentral.com', 'lojacentral', 'senhaLoja1', 100, 'CODE100', '2025-12-31 23:59:59', 1, '2026-12-31 23:59:59', 1, 'SC1'),
-(2, 'Loja Leste', '98765432000199', 'contato@lojaleste.com', 'lojaleste', 'senhaLoja2', 200, 'CODE200', '2025-12-31 23:59:59', 2, '2026-12-31 23:59:59', 0, 'SC2');
+INSERT INTO `stores` (`id`, `name`, `document`, `email`, `username`, `user_password`, `number`, `code`, `validity`, `address_id`, `subscription_end`, `analytics`, `active`) VALUES
+(1, 'Loja Central', '12345678000199', 'contato@lojacentral.com', 'lojacentral', 'senhaLoja1', 100, 'CODE100', '2025-12-31 23:59:59', 1, '2026-12-31 23:59:59', 1, 1),
+(2, 'Loja Leste', '98765432000199', 'contato@lojaleste.com', 'lojaleste', 'senhaLoja2', 200, 'CODE200', '2025-12-31 23:59:59', 2, '2026-12-31 23:59:59', 0, 1);
 
 INSERT INTO `store_workers` (`id`, `name`, `username`, `user_password`, `store_id`) VALUES
 (1, 'Carlos Lima', 'carlosl', 'senhaWorker1', 1),
