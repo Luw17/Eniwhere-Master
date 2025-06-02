@@ -177,7 +177,6 @@ CREATE TABLE IF NOT EXISTS `worker_2fa_codes` (
 
 
 -- inserts de teste
--- inserts de teste
 INSERT INTO `addresses` (`id`, `postal_code`, `country`, `state`, `city`, `neighborhood`, `address_line`) VALUES
 (1, '12345-678', 'Brasil', 'SP', 'São Paulo', 'Centro', 'Rua A, 100'),
 (2, '98765-432', 'Brasil', 'RJ', 'Rio de Janeiro', 'Copacabana', 'Avenida B, 200');
@@ -202,7 +201,6 @@ INSERT INTO `store_workers` (`id`, `name`, `username`, `user_password`, `store_i
 (1, 'Carlos Lima', 'carlosl', 'senhaWorker1', 1),
 (2, 'Ana Paula', 'anap', 'senhaWorker2', 2);
 
--- ALTERADO AQUI: adicionado o campo `store_id`
 INSERT INTO `service_orders` (`id`, `user_device_id`, `worker_id`, `store_id`, `created_at`, `completed_at`, `feedback`, `warranty`, `cost`, `work`, `status`, `deadline`, `problem`) VALUES
 (1, 1, 1, 1, '2025-05-01 10:00:00', '2025-05-03 15:00:00', 5, 12, '150.00', 'Troca de tela', 'done', '2025-05-05', 'Tela quebrada'),
 (2, 2, 2, 2, '2025-05-02 11:00:00', NULL, 0, 0, NULL, NULL, 'doing', '2025-05-10', 'Problema de bateria');
