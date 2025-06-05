@@ -5,6 +5,7 @@
     "setup": "git submodule update --init --recursive && git submodule update --remote --merge && docker-compose up --build",
     "update": "git submodule update --remote --merge && docker-compose up --build -d",
     "start": "docker-compose up",
-    "stop": "docker-compose down"
+    "stop": "docker-compose down",
+    "reset": "docker-compose down -v && docker-compose up --build"
   }
 }
