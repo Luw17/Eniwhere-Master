@@ -22,8 +22,6 @@ CREATE TABLE IF NOT EXISTS `app_users` (
   `username` VARCHAR(45) NOT NULL,
   `user_password` VARCHAR(100) NOT NULL,
   `number` VARCHAR(45),
-  `code` VARCHAR(45),
-  `validity` DATETIME,
   `address_id` INT NULL,
   `active` TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
@@ -59,8 +57,6 @@ CREATE TABLE IF NOT EXISTS `stores` (
   `username` VARCHAR(45) NOT NULL,
   `user_password` VARCHAR(100) NOT NULL,
   `number` INT NOT NULL,
-  `code` VARCHAR(45) NULL,
-  `validity` DATETIME NULL,
   `address_id` INT NOT NULL,
   `subscription_end` DATETIME NOT NULL,
   `analytics` TINYINT NOT NULL DEFAULT 0,
@@ -69,7 +65,6 @@ CREATE TABLE IF NOT EXISTS `stores` (
   UNIQUE (`document`),
   UNIQUE (`username`),
   UNIQUE (`user_password`),
-  UNIQUE (`code`),
   FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`)
 ) ENGINE = InnoDB;
 
@@ -103,26 +98,13 @@ CREATE TABLE IF NOT EXISTS `service_orders` (
   FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`)
 )ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `user_2fa_codes` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `code` VARCHAR(45) NOT NULL,
-  `validity` DATETIME NOT NULL,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE (`code`),
-  FOREIGN KEY (`user_id`) REFERENCES `app_users` (`id`)
-) ENGINE = InnoDB;
-
 CREATE TABLE IF NOT EXISTS `admins` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `user_password` VARCHAR(100) NOT NULL,
-  `code` VARCHAR(45) NOT NULL,
-  `validity` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE (`username`),
-  UNIQUE (`user_password`),
-  UNIQUE (`code`)
+  UNIQUE (`user_password`)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `order_logs` (
@@ -138,25 +120,6 @@ CREATE TABLE IF NOT EXISTS `order_logs` (
   FOREIGN KEY (`service_order_id`) REFERENCES `service_orders` (`id`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `store_2fa_codes` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `code` VARCHAR(45) NOT NULL,
-  `validity` DATETIME NOT NULL,
-  `store_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE (`code`),
-  FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`)
-) ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS `admin_2fa_codes` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `code` VARCHAR(45) NOT NULL,
-  `validity` DATETIME NOT NULL,
-  `admin_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE (`code`),
-  FOREIGN KEY (`admin_id`) REFERENCES `admins` (`id`)
-) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `pictures` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -166,69 +129,81 @@ CREATE TABLE IF NOT EXISTS `pictures` (
   FOREIGN KEY (`service_order_id`) REFERENCES `service_orders` (`id`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `worker_2fa_codes` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `code` VARCHAR(45),
-  `validity` VARCHAR(45),
-  `worker_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`worker_id`) REFERENCES `store_workers` (`id`)
-) ENGINE = InnoDB;
-
-
 -- inserts de teste
-INSERT INTO `addresses` (`id`, `postal_code`, `country`, `state`, `city`, `neighborhood`, `address_line`) VALUES
-(1, '12345-678', 'Brasil', 'SP', 'São Paulo', 'Centro', 'Rua A, 100'),
-(2, '98765-432', 'Brasil', 'RJ', 'Rio de Janeiro', 'Copacabana', 'Avenida B, 200');
+INSERT INTO `addresses` (`postal_code`, `country`, `state`, `city`, `neighborhood`, `address_line`) VALUES
+('12345-678', 'Brazil', 'SP', 'São Paulo', 'Centro', 'Rua A, 123'),
+('23456-789', 'Brazil', 'RJ', 'Rio de Janeiro', 'Copacabana', 'Avenida Atlântica, 500'),
+('34567-890', 'Brazil', 'MG', 'Belo Horizonte', 'Savassi', 'Rua B, 456'),
+('45678-901', 'Brazil', 'RS', 'Porto Alegre', 'Moinhos', 'Rua C, 789'),
+('56789-012', 'Brazil', 'BA', 'Salvador', 'Pelourinho', 'Ladeira D, 321');
 
-INSERT INTO `app_users` (`id`, `document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `code`, `validity`, `address_id`) VALUES
-(1, '12345678900', 'João Silva', 'joao@example.com', '11999999999', 'joaos', 'senha123', '10', 'ABC123', '2025-12-31 23:59:59', 1),
-(2, '98765432100', 'Maria Souza', 'maria@example.com', '21988888888', 'marias', 'senha456', '20', 'DEF456', '2025-12-31 23:59:59', 2);
 
-INSERT INTO `devices` (`id`, `device_name`, `model`, `brand`) VALUES
-(1, 'Smartphone', 'Galaxy S21', 'Samsung'),
-(2, 'Laptop', 'XPS 13', 'Dell');
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('12345678900', 'João Silva', 'joao@example.com', '11999999999', 'joaosilva', 'senha123', '101', 1, 1),
+('98765432100', 'Maria Souza', 'maria@example.com', '21988888888', 'mariasouza', 'senha456', '202', 2, 1),
+('11223344556', 'Carlos Lima', 'carlos@example.com', '31977777777', 'carlima', 'senha789', '303', 3, 1),
+('66554433221', 'Ana Paula', 'ana@example.com', '41966666666', 'anapaula', 'senha321', '404', 4, 1),
+('99887766554', 'Bruno Costa', 'bruno@example.com', '51955555555', 'brunocosta', 'senha654', '505', 5, 0);
 
-INSERT INTO `user_devices` (`id`, `user_id`, `device_id`) VALUES
-(1, 1, 1),
-(2, 2, 2);
 
-INSERT INTO `stores` (`id`, `name`, `document`, `email`, `username`, `user_password`, `number`, `code`, `validity`, `address_id`, `subscription_end`, `analytics`, `active`) VALUES
-(1, 'Loja Central', '12345678000199', 'contato@lojacentral.com', 'lojacentral', 'senhaLoja1', 100, 'CODE100', '2025-12-31 23:59:59', 1, '2026-12-31 23:59:59', 1, 1),
-(2, 'Loja Leste', '98765432000199', 'contato@lojaleste.com', 'lojaleste', 'senhaLoja2', 200, 'CODE200', '2025-12-31 23:59:59', 2, '2026-12-31 23:59:59', 0, 1);
+INSERT INTO `devices` (`device_name`, `model`, `brand`, `active`) VALUES
+('iPhone 13', 'A2633', 'Apple', 1),
+('Galaxy S21', 'SM-G991B', 'Samsung', 1),
+('Redmi Note 10', 'M2101K7AG', 'Xiaomi', 1),
+('Moto G9', 'XT2083-1', 'Motorola', 1),
+('Zenfone 8', 'ZS590KS', 'Asus', 0);
 
-INSERT INTO `store_workers` (`id`, `name`, `username`, `user_password`, `store_id`) VALUES
-(1, 'Carlos Lima', 'carlosl', 'senhaWorker1', 1),
-(2, 'Ana Paula', 'anap', 'senhaWorker2', 2);
 
-INSERT INTO `service_orders` (`id`, `user_device_id`, `worker_id`, `store_id`, `created_at`, `completed_at`, `feedback`, `warranty`, `cost`, `work`, `status`, `deadline`, `problem`) VALUES
-(1, 1, 1, 1, '2025-05-01 10:00:00', '2025-05-03 15:00:00', 5, 12, '150.00', 'Troca de tela', 'done', '2025-05-05', 'Tela quebrada'),
-(2, 2, 2, 2, '2025-05-02 11:00:00', NULL, 0, 0, NULL, NULL, 'doing', '2025-05-10', 'Problema de bateria');
+INSERT INTO `user_devices` (`user_id`, `device_id`) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5);
 
-INSERT INTO `user_2fa_codes` (`id`, `code`, `validity`, `user_id`) VALUES
-(1, '2FA123', '2025-06-01 12:00:00', 1),
-(2, '2FA456', '2025-06-01 12:00:00', 2);
+INSERT INTO `stores` (`name`, `document`, `email`, `username`, `user_password`, `number`, `address_id`, `subscription_end`, `analytics`, `active`) VALUES
+('Loja SP', '12345678000100', 'loja1@exemplo.com', 'loja1', 'senha1', 101, 1, '2026-12-31 23:59:59', 1, 1),
+('Loja RJ', '23456789000111', 'loja2@exemplo.com', 'loja2', 'senha2', 202, 2, '2025-11-30 23:59:59', 0, 1),
+('Loja MG', '34567890000122', 'loja3@exemplo.com', 'loja3', 'senha3', 303, 3, '2025-10-31 23:59:59', 1, 1),
+('Loja RS', '45678900000133', 'loja4@exemplo.com', 'loja4', 'senha4', 404, 4, '2025-09-30 23:59:59', 0, 0),
+('Loja BA', '56789000000144', 'loja5@exemplo.com', 'loja5', 'senha5', 505, 5, '2025-08-31 23:59:59', 1, 1);
 
-INSERT INTO `admins` (`id`, `username`, `user_password`, `code`, `validity`) VALUES
-(1, 'admin1', 'senhaAdmin1', 'ADM123', '2025-12-31 23:59:59'),
-(2, 'admin2', 'senhaAdmin2', 'ADM456', '2025-12-31 23:59:59');
+INSERT INTO `store_workers` (`name`, `username`, `user_password`, `store_id`) VALUES
+('Lucas Rocha', 'lucasr', 'senha123', 1),
+('Juliana Prado', 'julianap', 'senha456', 2),
+('Marcos Vinícius', 'marcosv', 'senha789', 3),
+('Fernanda Lima', 'fernandal', 'senha321', 4),
+('Paulo Sérgio', 'paulos', 'senha654', 5);
 
-INSERT INTO `order_logs` (`id`, `service_order_id`, `cost`, `work`, `status`, `deadline`, `problem`, `log_date`) VALUES
-(1, 1, '150.00', 'Troca de tela', 'Concluído', '2025-05-05', 'Tela quebrada', '2025-05-03 15:00:00'),
-(2, 2, '', '', 'Em andamento', '2025-05-10', 'Problema de bateria', '2025-05-02 11:00:00');
 
-INSERT INTO `store_2fa_codes` (`id`, `code`, `validity`, `store_id`) VALUES
-(1, 'S2FA123', '2025-06-01 12:00:00', 1),
-(2, 'S2FA456', '2025-06-01 12:00:00', 2);
+INSERT INTO `service_orders` (`user_device_id`, `worker_id`, `store_id`, `created_at`, `completed_at`, `feedback`, `warranty`, `cost`, `work`, `status`, `deadline`, `problem`) VALUES
+(1, 1, 1, NOW(), NULL, NULL, 6, '250.00', 'Troca de tela', 'pending', '2025-06-15', 'Tela quebrada'),
+(2, 2, 2, NOW(), '2025-06-01 14:00:00', 10, 12, '180.00', 'Troca de bateria', 'completed', '2025-06-05', 'Bateria descarregando'),
+(3, 3, 3, NOW(), NULL, NULL, NULL, NULL, NULL, 'pending', '2025-06-20', 'Celular não liga'),
+(4, 4, 4, NOW(), NULL, NULL, 3, '400.00', 'Troca de placa', 'in progress', '2025-06-30', 'Sem sinal'),
+(5, 5, 5, NOW(), NULL, NULL, 6, '150.00', 'Limpeza e manutenção', 'pending', '2025-07-01', 'Aquecimento excessivo');
 
-INSERT INTO `admin_2fa_codes` (`id`, `code`, `validity`, `admin_id`) VALUES
-(1, 'A2FA123', '2025-06-01 12:00:00', 1),
-(2, 'A2FA456', '2025-06-01 12:00:00', 2);
 
-INSERT INTO `pictures` (`id`, `service_order_id`, `path`) VALUES
-(1, 1, '/images/orders/1_pic1.jpg'),
-(2, 1, '/images/orders/1_pic2.jpg');
+INSERT INTO `order_logs` (`service_order_id`, `cost`, `work`, `status`, `deadline`, `problem`, `log_date`) VALUES
+(1, '250.00', 'Troca de tela', 'pending', '2025-06-15', 'Tela quebrada', NOW()),
+(2, '180.00', 'Troca de bateria', 'completed', '2025-06-05', 'Bateria descarregando', NOW()),
+(3, '0.00', 'Diagnóstico', 'pending', '2025-06-20', 'Celular não liga', NOW()),
+(4, '400.00', 'Troca de placa', 'in progress', '2025-06-30', 'Sem sinal', NOW()),
+(5, '150.00', 'Limpeza e manutenção', 'pending', '2025-07-01', 'Aquecimento excessivo', NOW());
 
-INSERT INTO `worker_2fa_codes` (`id`, `code`, `validity`, `worker_id`) VALUES
-(1, 'W2FA123', '2025-06-01 12:00:00', 1),
-(2, 'W2FA456', '2025-06-01 12:00:00', 2);
+
+INSERT INTO `admins` (`username`, `user_password`) VALUES
+('admin1', 'senhaSegura123'),
+('admin2', 'senhaForte456'),
+('admin3', 'adminPass789'),
+('superuser', 'rootAccess999'),
+('Luw','luw12345'),
+('gestor_ti', 'ti@empresa2025');
+
+
+INSERT INTO `pictures` (`service_order_id`, `path`) VALUES
+(1, '/uploads/tela_quebrada.jpg'),
+(2, '/uploads/bateria_ruim.jpg'),
+(3, '/uploads/celular_morto.jpg'),
+(4, '/uploads/placa_queimada.jpg'),
+(5, '/uploads/sujeira_interna.jpg');
