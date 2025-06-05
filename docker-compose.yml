@@ -68,5 +68,12 @@ services:
     volumes:
       - ./mysql/init:/docker-entrypoint-initdb.d
 
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    ports:
+    - "5540:5540"
+    restart: always
+
 volumes:
   redis-data:
