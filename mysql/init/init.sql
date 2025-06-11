@@ -73,10 +73,14 @@ CREATE TABLE IF NOT EXISTS `store_workers` (
   `name` VARCHAR(100),
   `username` VARCHAR(45),
   `user_password` VARCHAR(100),
+  `email` VARCHAR(100) NOT NULL,
   `store_id` INT NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE (`username`),
+  UNIQUE (`email`),
   FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`)
 ) ENGINE = InnoDB;
+
 
 CREATE TABLE IF NOT EXISTS `service_orders` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -102,10 +106,13 @@ CREATE TABLE IF NOT EXISTS `admins` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `user_password` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE (`username`),
-  UNIQUE (`user_password`)
+  UNIQUE (`user_password`),
+  UNIQUE (`email`)
 ) ENGINE = InnoDB;
+
 
 CREATE TABLE IF NOT EXISTS `order_logs` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -168,12 +175,13 @@ INSERT INTO `stores` (`name`, `document`, `email`, `username`, `user_password`, 
 ('Loja RS', '45678900000133', 'loja4@exemplo.com', 'loja4', 'senha4', 404, 4, '2025-09-30 23:59:59', 0, 0),
 ('Loja BA', '56789000000144', 'loja5@exemplo.com', 'loja5', 'senha5', 505, 5, '2025-08-31 23:59:59', 1, 1);
 
-INSERT INTO `store_workers` (`name`, `username`, `user_password`, `store_id`) VALUES
-('Lucas Rocha', 'lucasr', 'senha123', 1),
-('Juliana Prado', 'julianap', 'senha456', 2),
-('Marcos Vinícius', 'marcosv', 'senha789', 3),
-('Fernanda Lima', 'fernandal', 'senha321', 4),
-('Paulo Sérgio', 'paulos', 'senha654', 5);
+INSERT INTO `store_workers` (`name`, `username`, `user_password`, `email`, `store_id`) VALUES
+('Lucas Rocha', 'lucasr', 'senha123', 'lucasr@example.com', 1),
+('Juliana Prado', 'julianap', 'senha456', 'julianap@example.com', 2),
+('Marcos Vinícius', 'marcosv', 'senha789', 'marcosv@example.com', 3),
+('Fernanda Lima', 'fernandal', 'senha321', 'fernandal@example.com', 4),
+('Paulo Sérgio', 'paulos', 'senha654', 'paulos@example.com', 5);
+
 
 
 INSERT INTO `service_orders` (`user_device_id`, `worker_id`, `store_id`, `created_at`, `completed_at`, `feedback`, `warranty`, `cost`, `work`, `status`, `deadline`, `problem`) VALUES
@@ -192,13 +200,13 @@ INSERT INTO `order_logs` (`service_order_id`, `cost`, `work`, `status`, `deadlin
 (5, '150.00', 'Limpeza e manutenção', 'pending', '2025-07-01', 'Aquecimento excessivo', NOW());
 
 
-INSERT INTO `admins` (`username`, `user_password`) VALUES
-('admin1', 'senhaSegura123'),
-('admin2', 'senhaForte456'),
-('admin3', 'adminPass789'),
-('superuser', 'rootAccess999'),
-('Luw','luw12345'),
-('gestor_ti', 'ti@empresa2025');
+INSERT INTO `admins` (`username`, `user_password`, `email`) VALUES
+('admin1', 'senhaSegura123', 'admin1@example.com'),
+('admin2', 'senhaForte456', 'admin2@example.com'),
+('admin3', 'adminPass789', 'admin3@example.com'),
+('superuser', 'rootAccess999', 'superuser@example.com'),
+('Luw', 'luw12345', 'luisflavio360@gmail.com'),
+('gestor_ti', 'ti@empresa2025', 'gestor_ti@example.com');
 
 
 INSERT INTO `pictures` (`service_order_id`, `path`) VALUES
