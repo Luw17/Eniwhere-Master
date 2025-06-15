@@ -182,11 +182,11 @@ INSERT INTO `store_workers` (`name`, `username`, `user_password`, `email`, `stor
 
 
 INSERT INTO `service_orders` (`user_device_id`, `worker_id`, `store_id`, `created_at`, `completed_at`, `feedback`, `warranty`, `cost`, `work`, `status`, `deadline`, `problem`) VALUES
-(1, 1, 1, NOW(), NULL, NULL, 6, '250.00', 'Troca de tela', 'pending', '2025-06-15', 'Tela quebrada'),
-(2, 2, 2, NOW(), '2025-06-01 14:00:00', 10, 12, '180.00', 'Troca de bateria', 'completed', '2025-06-05', 'Bateria descarregando'),
+(1, 1, 1, NOW(), NULL, NULL, 6, 250.00, 50.00, 'pending', '2025-06-15', 'Tela quebrada'),
+(2, 2, 2, '2025-06-01 10:00:00', '2025-06-01 14:00:00', 10, 12, 180.00, 'Troca de bateria', 'completed', '2025-06-05', 'Bateria descarregando'),
 (3, 3, 3, NOW(), NULL, NULL, NULL, NULL, NULL, 'pending', '2025-06-20', 'Celular não liga'),
-(4, 4, 4, NOW(), NULL, NULL, 3, '400.00', 'Troca de placa', 'in progress', '2025-06-30', 'Sem sinal'),
-(5, 5, 5, NOW(), NULL, NULL, 6, '150.00', 'Limpeza e manutenção', 'pending', '2025-07-01', 'Aquecimento excessivo');
+(4, 4, 4, NOW(), NULL, NULL, 3, 400.00, 80.00, 'in progress', '2025-06-30', 'Sem sinal'),
+(5, 5, 5, NOW(), NULL, NULL, 6,150.00, 50.00, 'pending', '2025-07-01', 'Aquecimento excessivo');
 
 
 INSERT INTO `order_logs` (`service_order_id`, `cost`, `work`, `status`, `deadline`, `problem`, `log_date`) VALUES
