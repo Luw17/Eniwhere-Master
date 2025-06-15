@@ -114,11 +114,11 @@ CREATE TABLE IF NOT EXISTS `admins` (
 CREATE TABLE IF NOT EXISTS `order_logs` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `service_order_id` INT NOT NULL,
-  `cost` DECIMAL(10,2) NOT NULL,
-  `work` DECIMAL(10,2) NOT NULL,
-  `status` VARCHAR(100) NOT NULL,
-  `deadline` DATE NOT NULL,
-  `problem` VARCHAR(255) NOT NULL,
+  `cost` DECIMAL(10,2) NULL,
+  `work` DECIMAL(10,2) NULL,
+  `status` VARCHAR(100) NULL,
+  `deadline` DATE NULL,
+  `problem` VARCHAR(255) NULL,
   `log_date` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`service_order_id`) REFERENCES `service_orders` (`id`)
@@ -139,80 +139,6 @@ INSERT INTO `addresses` (`postal_code`, `country`, `state`, `city`, `neighborhoo
 ('34567-890', 'Brazil', 'MG', 'Belo Horizonte', 'Savassi', 'Rua B, 456'),
 ('45678-901', 'Brazil', 'RS', 'Porto Alegre', 'Moinhos', 'Rua C, 789'),
 ('56789-012', 'Brazil', 'BA', 'Salvador', 'Pelourinho', 'Ladeira D, 321');
-
-
-INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
-('12345678900', 'João Silva', 'joao@example.com', '11999999999', 'joaosilva', 'senha123', '101', 1, 1),
-('98765432100', 'Maria Souza', 'maria@example.com', '21988888888', 'mariasouza', 'senha456', '202', 2, 1),
-('11223344556', 'Carlos Lima', 'carlos@example.com', '31977777777', 'carlima', 'senha789', '303', 3, 1),
-('66554433221', 'Ana Paula', 'ana@example.com', '41966666666', 'anapaula', 'senha321', '404', 4, 1),
-('99887766554', 'Bruno Costa', 'bruno@example.com', '51955555555', 'brunocosta', 'senha654', '505', 5, 0);
-
-
-INSERT INTO `devices` (`device_name`, `model`, `brand`, `active`) VALUES
-('iPhone 13', 'A2633', 'Apple', 1),
-('Galaxy S21', 'SM-G991B', 'Samsung', 1),
-('Redmi Note 10', 'M2101K7AG', 'Xiaomi', 1),
-('Moto G9', 'XT2083-1', 'Motorola', 1),
-('Zenfone 8', 'ZS590KS', 'Asus', 0);
-
-
-INSERT INTO `user_devices` (`user_id`, `device_id`) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
-
-INSERT INTO `stores` (`name`, `document`, `email`, `username`, `user_password`, `number`, `address_id`, `subscription_end`, `analytics`, `active`) VALUES
-('Loja SP', '12345678000100', 'loja1@exemplo.com', 'loja1', 'senha1', 101, 1, '2026-12-31 23:59:59', 1, 1),
-('Loja RJ', '23456789000111', 'loja2@exemplo.com', 'loja2', 'senha2', 202, 2, '2025-11-30 23:59:59', 0, 1),
-('Loja MG', '34567890000122', 'loja3@exemplo.com', 'loja3', 'senha3', 303, 3, '2025-10-31 23:59:59', 1, 1),
-('Loja RS', '45678900000133', 'loja4@exemplo.com', 'loja4', 'senha4', 404, 4, '2025-09-30 23:59:59', 0, 0),
-('Loja BA', '56789000000144', 'loja5@exemplo.com', 'loja5', 'senha5', 505, 5, '2025-08-31 23:59:59', 1, 1);
-
-INSERT INTO `store_workers` (`name`, `username`, `user_password`, `email`, `store_id`) VALUES
-('Lucas Rocha', 'lucasr', 'senha123', 'lucasr@example.com', 1),
-('Juliana Prado', 'julianap', 'senha456', 'julianap@example.com', 2),
-('Marcos Vinícius', 'marcosv', 'senha789', 'marcosv@example.com', 3),
-('Fernanda Lima', 'fernandal', 'senha321', 'fernandal@example.com', 4),
-('Paulo Sérgio', 'paulos', 'senha654', 'paulos@example.com', 5);
-
-
-
-INSERT INTO `service_orders` (`user_device_id`, `worker_id`, `store_id`, `created_at`, `completed_at`, `feedback`, `warranty`, `cost`, `work`, `status`, `deadline`, `problem`) VALUES
-(1, 1, 1, NOW(), NULL, NULL, 6, 250.00, 50.00, 'pending', '2025-06-15', 'Tela quebrada'),
-(2, 2, 2, '2025-06-01 10:00:00', '2025-06-01 14:00:00', 10, 12, 180.00, 30.00, 'completed', '2025-06-05', 'Bateria descarregando'),
-(3, 3, 3, NOW(), NULL, NULL, NULL, NULL, NULL, 'pending', '2025-06-20', 'Celular não liga'),
-(4, 4, 4, NOW(), NULL, NULL, 3, 400.00, 80.00, 'in progress', '2025-06-30', 'Sem sinal'),
-(5, 5, 5, NOW(), NULL, NULL, 6,150.00, 50.00, 'pending', '2025-07-01', 'Aquecimento excessivo');
-
-
-INSERT INTO `order_logs` (`service_order_id`, `cost`, `work`, `status`, `deadline`, `problem`, `log_date`) VALUES
-(1, '250.00', '30.00', 'pending', '2025-06-15', 'Tela quebrada', NOW()),
-(2, '180.00', 50.00, 'completed', '2025-06-05', 'Bateria descarregando', NOW()),
-(3, '0.00', '0.00', 'pending', '2025-06-20', 'Celular não liga', NOW()),
-(4, '400.00', '20.00', 'in progress', '2025-06-30', 'Sem sinal', NOW()),
-(5, '150.00', '50.00', 'pending', '2025-07-01', 'Aquecimento excessivo', NOW());
-
-
-INSERT INTO `admins` (`username`, `user_password`, `email`) VALUES
-('admin1', 'senhaSegura123', 'admin1@example.com'),
-('admin2', 'senhaForte456', 'admin2@example.com'),
-('admin3', 'adminPass789', 'admin3@example.com'),
-('superuser', 'rootAccess999', 'superuser@example.com'),
-('Luw', 'luw12345', 'luisflavio360@gmail.com'),
-('gestor_ti', 'ti@empresa2025', 'gestor_ti@example.com');
-
-
-INSERT INTO `pictures` (`service_order_id`, `path`) VALUES
-(1, '/uploads/tela_quebrada.jpg'),
-(2, '/uploads/bateria_ruim.jpg'),
-(3, '/uploads/celular_morto.jpg'),
-(4, '/uploads/placa_queimada.jpg'),
-(5, '/uploads/sujeira_interna.jpg');
-
--- Inserções para tabela 'addresses' (Endereços brasileiros)
 INSERT INTO `addresses` (`postal_code`, `country`, `state`, `city`, `neighborhood`, `address_line`) VALUES
 ('01001-000', 'Brasil', 'SP', 'São Paulo', 'Sé', 'Praça da Sé, 1'),
 ('20020-010', 'Brasil', 'RJ', 'Rio de Janeiro', 'Centro', 'Av. Rio Branco, 1'),
@@ -304,58 +230,106 @@ INSERT INTO `addresses` (`postal_code`, `country`, `state`, `city`, `neighborhoo
 ('70100-090', 'Brasil', 'DF', 'Brasília', 'Planaltina', 'Área Especial 1'),
 ('80100-090', 'Brasil', 'PR', 'Curitiba', 'Hugo Lange', 'Rua Presidente Taunay, 1000'),
 ('90100-090', 'Brasil', 'RS', 'Porto Alegre', 'Centro Histórico', 'Rua dos Andradas, 1000');
-
 INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
-('11122233344', 'João Silva', 'joao.silva@email.com', '11987654321', 'joaosilvaa', 'senha1234a', 'Apto 101', 1, 1),
-('22233344455', 'Maria Oliveira', 'maria.oliveira@email.com', '21987654321', 'mariaoliveira', 'senha123', 'Casa 2', 2, 1),
-('33344455566', 'Carlos Souza', 'carlos.souza@email.com', '31987654321', 'carlossouza', 'senha123', 'Bloco A', 3, 1),
-('44455566677', 'Ana Costa', 'ana.costa@email.com', '41987654321', 'anacosta', 'senha123', 'Sala 10', 4, 1),
-('55566677788', 'Pedro Santos', 'pedro.santos@email.com', '51987654321', 'pedrosantos', 'senha123', 'Apto 202', 5, 1),
-('66677788899', 'Mariana Lima', 'mariana.lima@email.com', '61987654321', 'marianalima', 'senha123', 'Casa 5', 6, 1),
-('77788899900', 'Lucas Pereira', 'lucas.pereira@email.com', '71987654321', 'lucaspereira', 'senha123', 'Bloco B', 7, 1),
-('88899900011', 'Juliana Alves', 'juliana.alves@email.com', '81987654321', 'julianaalves', 'senha123', 'Sala 20', 8, 1),
-('99900011122', 'Fernando Gomes', 'fernando.gomes@email.com', '85987654321', 'fernandogomes', 'senha123', 'Apto 303', 9, 1),
-('00011122233', 'Patrícia Ribeiro', 'patricia.ribeiro@email.com', '11987654322', 'patriciaribeiro', 'senha123', 'Casa 8', 10, 1),
-('11122233345', 'Ricardo Martins', 'ricardo.martins@email.com', '21987654322', 'ricardomartins', 'senha123', 'Bloco C', 11, 1),
-('22233344456', 'Amanda Ferreira', 'amanda.ferreira@email.com', '31987654322', 'amandaferreira', 'senha123', 'Sala 30', 12, 1),
-('33344455567', 'Roberto Carvalho', 'roberto.carvalho@email.com', '41987654322', 'robertocarvalho', 'senha123', 'Apto 404', 13, 1),
-('44455566678', 'Tatiane Nunes', 'tatiane.nunes@email.com', '51987654322', 'tatianenunes', 'senha123', 'Casa 12', 14, 1),
-('55566677789', 'Eduardo Rocha', 'eduardo.rocha@email.com', '61987654322', 'eduardorocha', 'senha123', 'Bloco D', 15, 1),
-('66677788890', 'Vanessa Correia', 'vanessa.correia@email.com', '71987654322', 'vanessacorreia', 'senha123', 'Sala 40', 16, 1),
-('77788899901', 'Marcos Pinto', 'marcos.pinto@email.com', '81987654322', 'marcospinto', 'senha123', 'Apto 505', 17, 1),
-('88899900012', 'Cristina Dias', 'cristina.dias@email.com', '85987654322', 'cristinadias', 'senha123', 'Casa 15', 18, 1),
-('99900011123', 'Gustavo Monteiro', 'gustavo.monteiro@email.com', '11987654323', 'gustavomonteiro', 'senha123', 'Bloco E', 19, 1),
-('00011122234', 'Isabela Cunha', 'isabela.cunha@email.com', '21987654323', 'isabelacunha', 'senha123', 'Sala 50', 20, 1),
-('11122233346', 'Rodrigo Moreira', 'rodrigo.moreira@email.com', '31987654323', 'rodrigomoreira', 'senha123', 'Apto 606', 21, 1),
-('22233344457', 'Larissa Cardoso', 'larissa.cardoso@email.com', '41987654323', 'larissacardoso', 'senha123', 'Casa 18', 22, 1),
-('33344455568', 'Felipe Ramos', 'felipe.ramos@email.com', '51987654323', 'feliperamos', 'senha123', 'Bloco F', 23, 1),
-('44455566679', 'Daniela Peixoto', 'daniela.peixoto@email.com', '61987654323', 'danielapeixoto', 'senha123', 'Sala 60', 24, 1),
-('55566677780', 'Alexandre Campos', 'alexandre.campos@email.com', '71987654323', 'alexandrecampos', 'senha123', 'Apto 707', 25, 1),
-('66677788891', 'Beatriz Rezende', 'beatriz.rezende@email.com', '81987654323', 'beatrizrezende', 'senha123', 'Casa 20', 26, 1),
-('77788899902', 'Vinícius Guimarães', 'vinicius.guimaraes@email.com', '85987654323', 'viniciusguimaraes', 'senha123', 'Bloco G', 27, 1),
-('88899900013', 'Helena Barbosa', 'helena.barbosa@email.com', '11987654324', 'helenabarbosa', 'senha123', 'Sala 70', 28, 1),
-('99900011124', 'Rafael Tavares', 'rafael.tavares@email.com', '21987654324', 'rafaeltavares', 'senha123', 'Apto 808', 29, 1),
-('00011122235', 'Camila Andrade', 'camila.andrade@email.com', '31987654324', 'camilaandrade', 'senha123', 'Casa 22', 30, 1),
-('11122233347', 'Diego Mendes', 'diego.mendes@email.com', '41987654324', 'diegomendes', 'senha123', 'Bloco H', 31, 1),
-('22233344458', 'Laura Castro', 'laura.castro@email.com', '51987654324', 'lauracastro', 'senha123', 'Sala 80', 32, 1),
-('33344455569', 'Thiago Fonseca', 'thiago.fonseca@email.com', '61987654324', 'thiagofonseca', 'senha123', 'Apto 909', 33, 1),
-('44455566670', 'Natália Duarte', 'natalia.duarte@email.com', '71987654324', 'nataliaduarte', 'senha123', 'Casa 25', 34, 1),
-('55566677781', 'Bruno Lopes', 'bruno.lopes@email.com', '81987654324', 'brunolopes', 'senha123', 'Bloco I', 35, 1),
-('66677788892', 'Renata Miranda', 'renata.miranda@email.com', '85987654324', 'renatamiranda', 'senha123', 'Sala 90', 36, 1),
-('77788899903', 'Paulo Henrique', 'paulo.henrique@email.com', '11987654325', 'paulohenrique', 'senha123', 'Apto 1010', 37, 1),
-('88899900014', 'Gabriela Sampaio', 'gabriela.sampaio@email.com', '21987654325', 'gabrielasampaio', 'senha123', 'Casa 28', 38, 1),
-('99900011125', 'Marcelo Brito', 'marcelo.brito@email.com', '31987654325', 'marcelobrito', 'senha123', 'Bloco J', 39, 1),
-('00011122236', 'Letícia Azevedo', 'leticia.azevedo@email.com', '41987654325', 'leticiaazevedo', 'senha123', 'Sala 100', 40, 1),
-('11122233348', 'Leonardo Pires', 'leonardo.pires@email.com', '51987654325', 'leonardopires', 'senha123', 'Apto 1111', 41, 1),
-('22233344459', 'Simone Xavier', 'simone.xavier@email.com', '61987654325', 'simonexavier', 'senha123', 'Casa 30', 42, 1),
-('33344455560', 'André Vasconcelos', 'andre.vasconcelos@email.com', '71987654325', 'andrevasconcelos', 'senha123', 'Bloco K', 43, 1),
-('44455566671', 'Elaine Moraes', 'elaine.moraes@email.com', '81987654325', 'elainemoraes', 'senha123', 'Sala 110', 44, 1),
-('55566677782', 'Hugo Medeiros', 'hugo.medeiros@email.com', '85987654325', 'hugomedeiros', 'senha123', 'Apto 1212', 45, 1),
-('66677788893', 'Carla Santana', 'carla.santana@email.com', '11987654326', 'carlasantana', 'senha123', 'Casa 32', 46, 1),
-('77788899904', 'Otávio Freitas', 'otavio.freitas@email.com', '21987654326', 'otaviofreitas', 'senha123', 'Bloco L', 47, 1),
-('88899900015', 'Yasmin Teixeira', 'yasmin.teixeira@email.com', '31987654326', 'yasminteixeira', 'senha123', 'Sala 120', 48, 1),
-('99900011126', 'Igor Cordeiro', 'igor.cordeiro@email.com', '41987654326', 'igorcordeiro', 'senha123', 'Apto 1313', 49, 1),
-('00011122237', 'Luana Mello', 'luana.mello@email.com', '51987654326', 'luanamello', 'senha123', 'Casa 35', 50, 1);
+('11122233344', 'João Silva', 'joao.silva@email.com', '11987654321', 'joaosilvaa', '$2b$10$QoGo7/zvqT2wymqAOezb4udHUiAg82Zqah10/.70.p4tk3QB1XgRG', 'Apto 101', 1, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('22233344455', 'Maria Oliveira', 'maria.oliveira@email.com', '21987654321', 'mariaoliveira', '$2b$10$tCYDNoBDrmrh1TszPeuojOqhyWocMqffF5NTksF8N4YAjCkjm.9sy', 'Casa 2', 2, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('33344455566', 'Carlos Souza', 'carlos.souza@email.com', '31987654321', 'carlossouza', '$2b$10$/cAJIITdensmEF59emmVL.d5z7qw.06FqIlEXgzBWmwF9Bga8l.4K', 'Bloco A', 3, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('44455566677', 'Ana Costa', 'ana.costa@email.com', '41987654321', 'anacosta', '$2b$10$ptzh1losI2cdg2rojTH8B.GF7KrjVKdbVJm8PEBhhInux/7SRlcD2', 'Sala 10', 4, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('55566677788', 'Pedro Santos', 'pedro.santos@email.com', '51987654321', 'pedrosantos', '$2b$10$e9ENS/l1OZGMbH7fwuXPwOfjzpWWMTKOdvv8Mxlmjo1XZFh0240Li', 'Apto 202', 5, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('66677788899', 'Mariana Lima', 'mariana.lima@email.com', '61987654321', 'marianalima', '$2b$10$TwHIk1UhMLMKwepizz2sgOtcAdAsxPF2XYuqyE7ybnNgJ3BYf79Sy', 'Casa 5', 6, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('77788899900', 'Lucas Pereira', 'lucas.pereira@email.com', '71987654321', 'lucaspereira', '$2b$10$Uzw/O4/9snOP6ap34hU8QOjnHOhdgKty7enVL1Vr9cQFPxO79oR72', 'Bloco B', 7, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('88899900011', 'Juliana Alves', 'juliana.alves@email.com', '81987654321', 'julianaalves', '$2b$10$BF4LyaZLiWKEOFvup03DL.oGfUWLhOkTvJ//SoyC4K.1Y8jchJvMa', 'Sala 20', 8, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('99900011122', 'Fernando Gomes', 'fernando.gomes@email.com', '85987654321', 'fernandogomes', '$2b$10$DpNy9KqpB19m9DHAwP8nUu1VL9IqytpdRWP1idLCr7RBcYoNipi8.', 'Apto 303', 9, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('00011122233', 'Patrícia Ribeiro', 'patricia.ribeiro@email.com', '11987654322', 'patriciaribeiro', '$2b$10$MneyBxKdYAiQ1wr3cZqknuVY.N8dUT48UAfGEvds3qF9k7ablcUau', 'Casa 8', 10, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('11122233345', 'Ricardo Martins', 'ricardo.martins@email.com', '21987654322', 'ricardomartins', '$2b$10$1283sDELHV3NzN.bKW8xCefMWPxnUE/PFcNmIeAOR6CUgCtnjrYFC', 'Bloco C', 11, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('22233344456', 'Amanda Ferreira', 'amanda.ferreira@email.com', '31987654322', 'amandaferreira', '$2b$10$gMFZAJKhwdtXRsYyX/39NuXizdJalHLKXy..lNdajQT1J.aU7NhYq', 'Sala 30', 12, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('33344455567', 'Roberto Carvalho', 'roberto.carvalho@email.com', '41987654322', 'robertocarvalho', '$2b$10$nRJPjojZNQNcglj/jlOOt.F5t9d7YdgAhxoeUcClX8g9oCer9PYbC', 'Apto 404', 13, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('44455566678', 'Tatiane Nunes', 'tatiane.nunes@email.com', '51987654322', 'tatianenunes', '$2b$10$BANXH/Nt2Y8t6HUNL75uk.atrBPz.VCwP8PBFklQJbUg/laKcBz/C', 'Casa 12', 14, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('55566677789', 'Eduardo Rocha', 'eduardo.rocha@email.com', '61987654322', 'eduardorocha', '$2b$10$jBYXSA6NoZyOaV11RaFlruWe6ywJakl/SjBru8gOsDyh5RoNOH2sq', 'Bloco D', 15, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('66677788890', 'Vanessa Correia', 'vanessa.correia@email.com', '71987654322', 'vanessacorreia', '$2b$10$PkuEj3Se982sxwu97U11HOkCYE0KxxM0bXrf0Ec6niRCeZspAtpzS', 'Sala 40', 16, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('77788899901', 'Marcos Pinto', 'marcos.pinto@email.com', '81987654322', 'marcospinto', '$2b$10$tQhElnWsBiutr7ofE7N9reTjM3vg2S66xDGnKhecXp.KBmeI2qGy2', 'Apto 505', 17, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('88899900012', 'Cristina Dias', 'cristina.dias@email.com', '85987654322', 'cristinadias', '$2b$10$hAubu8s01T7hFv2vHu6F6./rJM4r0wA39P1FvbjqCf6AXCQ62m0Nu', 'Casa 15', 18, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('99900011123', 'Gustavo Monteiro', 'gustavo.monteiro@email.com', '11987654323', 'gustavomonteiro', '$2b$10$n/DMJ5F8.ecrkA2it21qzunR0.fN.CuHmIVnNmHGKAi0h4C8DqpN2', 'Bloco E', 19, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('00011122234', 'Isabela Cunha', 'isabela.cunha@email.com', '21987654323', 'isabelacunha', '$2b$10$Wwf4znp9NTdWbl9tkJLzTumOr13wF37eQVO0sktYqswUmtn0YDs2i', 'Sala 50', 20, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('11122233346', 'Rodrigo Moreira', 'rodrigo.moreira@email.com', '31987654323', 'rodrigomoreira', '$2b$10$FkUiaYX0fz2zOx70juk3hu7uSVcLjWJ3ydTijBD8nptwjGeZy77Ga', 'Apto 606', 21, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('22233344457', 'Larissa Cardoso', 'larissa.cardoso@email.com', '41987654323', 'larissacardoso', '$2b$10$X6q.G76g8tloPLsIw0SFV.K.rw/ZO/VyaDw3q75CTa8qjT3/hENR2', 'Casa 18', 22, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('33344455568', 'Felipe Ramos', 'felipe.ramos@email.com', '51987654323', 'feliperamos', '$2b$10$LxQInjYV/BbLKH7TF.mYg.dV6Orsq.Wrjf6vTwA2tRVsjn0hJ1liO', 'Bloco F', 23, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('44455566679', 'Daniela Peixoto', 'daniela.peixoto@email.com', '61987654323', 'danielapeixoto', '$2b$10$jvs/XfiZC87gnEGVbFET5enx14LEkZ9s1Yh8tnE5Y5VdKj6CZ5iI6', 'Sala 60', 24, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('55566677780', 'Alexandre Campos', 'alexandre.campos@email.com', '71987654323', 'alexandrecampos', '$2b$10$j3.Nb7DpRe/KDSEjcKM.y.u3AgfOg7BPzhQ3qo80XbAx1eD6FMQ/O', 'Apto 707', 25, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('66677788891', 'Beatriz Rezende', 'beatriz.rezende@email.com', '81987654323', 'beatrizrezende', '$2b$10$D0NZDrsEldpU08duF3jFxOjmoeRYJGq0NQBjQLQ8Xn6FVBwNoU1PS', 'Casa 20', 26, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('77788899902', 'Vinícius Guimarães', 'vinicius.guimaraes@email.com', '85987654323', 'viniciusguimaraes', '$2b$10$qSBprPjgqMpeYLCWv7OQM.reduQt3pxXt.uMUh7GTK/l5n2TXtc0G', 'Bloco G', 27, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('88899900013', 'Helena Barbosa', 'helena.barbosa@email.com', '11987654324', 'helenabarbosa', '$2b$10$z9jm33/IFTJ8Moxrmf.sNuy94duwDiAX961muTWMppmaJmi4WvGqe', 'Sala 70', 28, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('99900011124', 'Rafael Tavares', 'rafael.tavares@email.com', '21987654324', 'rafaeltavares', '$2b$10$2UglpSTWwxnoBSR1HSakPuoEryxUocS//0lFOdHBqIVFlzEfkT3KO', 'Apto 808', 29, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('00011122235', 'Camila Andrade', 'camila.andrade@email.com', '31987654324', 'camilaandrade', '$2b$10$DgCXlDYdROOYjJaU38aUG.I2xD.tCy/qdHcXbBBiIWzMN83elIkWm', 'Casa 22', 30, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('11122233347', 'Diego Mendes', 'diego.mendes@email.com', '41987654324', 'diegomendes', '$2b$10$QPQE90vWXxb4bI3jtwTbgOXCB0MVuY3y3tPdNi5r6ZVvz88olno1i', 'Bloco H', 31, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('22233344458', 'Laura Castro', 'laura.castro@email.com', '51987654324', 'lauracastro', '$2b$10$nv0HXCQeliFrIRqWmuWLWeW8pjrs38znpCeG9vbfTHELWAHIQ8Avu', 'Sala 80', 32, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('33344455569', 'Thiago Fonseca', 'thiago.fonseca@email.com', '61987654324', 'thiagofonseca', '$2b$10$BgN.Q6RKpc0Tg.fBgKK3geaz/RgdlUcjrPLDkWi2.9.CCU9EsdqQq', 'Apto 909', 33, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('44455566670', 'Natália Duarte', 'natalia.duarte@email.com', '71987654324', 'nataliaduarte', '$2b$10$vrtXEmg6NWC1KqEwZjSIOuvRYmOR78PNcF23LyCT7XhROjHH0OnU.', 'Casa 25', 34, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('55566677781', 'Bruno Lopes', 'bruno.lopes@email.com', '81987654324', 'brunolopes', '$2b$10$zYZGeu3oB48IkTJywhPgJehkS3bRadpqfklkFDc70WslLEu6jL6hC', 'Bloco I', 35, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('66677788892', 'Renata Miranda', 'renata.miranda@email.com', '85987654324', 'renatamiranda', '$2b$10$Ioro5L68oNXqUrC5B7ykA.tvniUEqw4yi4UkADHOXNwyrtg/4MhQG', 'Sala 90', 36, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('77788899903', 'Paulo Henrique', 'paulo.henrique@email.com', '11987654325', 'paulohenrique', '$2b$10$ESRtsuydY5XSpjKzns1rzOGZ0GdsV3p5G5zIHIkddDrahDq7v07jK', 'Apto 1010', 37, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('88899900014', 'Gabriela Sampaio', 'gabriela.sampaio@email.com', '21987654325', 'gabrielasampaio', '$2b$10$4UWg5a88T0kh.helSu.hNOjIQluAQks3eowBk4tVDvMVaHp.s6Wv2', 'Casa 28', 38, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('99900011125', 'Marcelo Brito', 'marcelo.brito@email.com', '31987654325', 'marcelobrito', '$2b$10$9tUU.KhCQfxikjtsXqaWEuhYCB2KyfOTO84KSVLzn6qqPpUqnQoYW', 'Bloco J', 39, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('00011122236', 'Letícia Azevedo', 'leticia.azevedo@email.com', '41987654325', 'leticiaazevedo', '$2b$10$Iia2olXkVAcea3eECL8bQekuXYIUqbEL4lFEk816HmmZgdmqQSfYS', 'Sala 100', 40, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('11122233348', 'Leonardo Pires', 'leonardo.pires@email.com', '51987654325', 'leonardopires', '$2b$10$LZOCENx0CIjm96G.2aJ7HeUaCEjLrci7V/a15XZQUvLdA2dSDRuOm', 'Apto 1111', 41, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('22233344459', 'Simone Xavier', 'simone.xavier@email.com', '61987654325', 'simonexavier', '$2b$10$LOp8Cz5nNLb7yrrJsatRGOhpAeiDkF6RHBK1r6Nknfu1ObtRckewK', 'Casa 30', 42, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('33344455560', 'André Vasconcelos', 'andre.vasconcelos@email.com', '71987654325', 'andrevasconcelos', '$2b$10$C6ID.UjVM./RW31rH0eaFe6Nx/NUzDdVqn6145mWq5JngdsmPZ0w.', 'Bloco K', 43, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('44455566671', 'Elaine Moraes', 'elaine.moraes@email.com', '81987654325', 'elainemoraes', '$2b$10$cElmMTmSMJY3xm7w10JP3.MR/43sXnJskX9Vg4BK1b4iUOTMXcF7C', 'Sala 110', 44, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('55566677782', 'Hugo Medeiros', 'hugo.medeiros@email.com', '85987654325', 'hugomedeiros', '$2b$10$xh.aeqWqfm3piG1a3/e/NegtTkN0IXRvCdkGEL.PTI5apZSQKl80u', 'Apto 1212', 45, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('66677788893', 'Carla Santana', 'carla.santana@email.com', '11987654326', 'carlasantana', '$2b$10$7mt4t93Kcwod8.QeAlXGEOt60zl3qkDTYi0cU/.eieWROPIWmVBwq', 'Casa 32', 46, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('77788899904', 'Otávio Freitas', 'otavio.freitas@email.com', '21987654326', 'otaviofreitas', '$2b$10$Ew65p16GmZnEAOdqqjGKpeQxrMmwgKnw9BCa3dn8l./OkU9gIs4D.', 'Bloco L', 47, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('88899900015', 'Yasmin Teixeira', 'yasmin.teixeira@email.com', '31987654326', 'yasminteixeira', '$2b$10$koEkAv8MX1qa3xE9nicHMOSEuCTU9bnS3ZWpNgqZThO5/h5e/mdJG', 'Sala 120', 48, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('99900011126', 'Igor Cordeiro', 'igor.cordeiro@email.com', '41987654326', 'igorcordeiro', '$2b$10$xl59ND.v5vvIUJtiGOFZcucbYu./Z5cjArqYZ6L0jFygEYh/XkeH.', 'Apto 1313', 49, 1);
+INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
+('00011122237', 'Luana Mello', 'luana.mello@email.com', '51987654326', 'luanamello', '$2b$10$RYLPd6s4vP751zItDlIFuuqhfJI4piz2AnEEEzJ/3Cuk9MyMoFvp6', 'Casa 35', 50, 1);
 
 INSERT INTO `devices` (`device_name`, `model`, `brand`, `active`) VALUES
 ('Smartphone', 'Galaxy S21', 'Samsung', 1),
@@ -408,6 +382,7 @@ INSERT INTO `devices` (`device_name`, `model`, `brand`, `active`) VALUES
 ('Smartphone', 'Moto G8', 'Motorola', 1),
 ('Tablet', 'iPad 8', 'Apple', 1),
 ('Smartphone', 'Galaxy M12', 'Samsung', 1);
+
 
 INSERT INTO `user_devices` (`user_id`, `device_id`) VALUES
 (1, 1),
@@ -462,54 +437,57 @@ INSERT INTO `user_devices` (`user_id`, `device_id`) VALUES
 (50, 50);
 
 INSERT INTO `stores` (`name`, `document`, `email`, `username`, `user_password`, `number`, `address_id`, `subscription_end`, `analytics`, `active`) VALUES
-('Assistência Técnica São Paulo', '12.345.678/0001-00', 'contato@assistenciasp.com.br', 'assistenciasp', 'senha123', 100, 1, '2024-12-31 23:59:59', 1, 1),
-('Rio Assistências', '23.456.789/0001-11', 'contato@rioassistencias.com.br', 'rioassistencias', 'senha123', 200, 2, '2024-12-31 23:59:59', 1, 1),
-('BH Tech Solutions', '34.567.890/0001-22', 'contato@bhtech.com.br', 'bhtech', 'senha123', 300, 3, '2024-12-31 23:59:59', 1, 1),
-('Salvador Celulares', '45.678.901/0001-33', 'contato@salvadorcelulares.com.br', 'salvadorcelulares', 'senha123', 400, 4, '2024-12-31 23:59:59', 1, 1),
-('Recife Assist', '56.789.012/0001-44', 'contato@recifeassist.com.br', 'recifeassist', 'senha123', 500, 5, '2024-12-31 23:59:59', 1, 1),
-('Fortaleza Reparo', '67.890.123/0001-55', 'contato@fortalezareparo.com.br', 'fortalezareparo', 'senha123', 600, 6, '2024-12-31 23:59:59', 1, 1),
-('Brasília Consertos', '78.901.234/0001-66', 'contato@brasiliaconsertos.com.br', 'brasiliaconsertos', 'senha123', 700, 7, '2024-12-31 23:59:59', 1, 1),
-('Curitiba Tecnologia', '89.012.345/0001-77', 'contato@curitibatecnologia.com.br', 'curitibatecnologia', 'senha123', 800, 8, '2024-12-31 23:59:59', 1, 1),
-('Porto Alegre Reparos', '90.123.456/0001-88', 'contato@poreparos.com.br', 'poreparos', 'senha123', 900, 9, '2024-12-31 23:59:59', 1, 1),
-('Campinas Assist', '01.234.567/0001-99', 'contato@campinasassist.com.br', 'campinasassist', 'senha123', 1000, 10, '2024-12-31 23:59:59', 1, 1),
-('Goiânia Celulares', '12.345.678/0001-01', 'contato@goianiacelulares.com.br', 'goianiacelulares', 'senha123', 1100, 11, '2024-12-31 23:59:59', 1, 1),
-('Manaus Tecnologia', '23.456.789/0001-12', 'contato@manaustecnologia.com.br', 'manaustecnologia', 'senha123', 1200, 12, '2024-12-31 23:59:59', 1, 1),
-('Belém Reparos', '34.567.890/0001-23', 'contato@belemreparos.com.br', 'belemreparos', 'senha123', 1300, 13, '2024-12-31 23:59:59', 1, 1),
-('Florianópolis Assist', '45.678.901/0001-34', 'contato@floripaassist.com.br', 'floripaassist', 'senha123', 1400, 14, '2024-12-31 23:59:59', 1, 1),
-('Vitória Consertos', '56.789.012/0001-45', 'contato@vitoriaconsertos.com.br', 'vitoriaconsertos', 'senha123', 1500, 15, '2024-12-31 23:59:59', 1, 1),
-('Natal Celulares', '67.890.123/0001-56', 'contato@natalcelulares.com.br', 'natalcelulares', 'senha123', 1600, 16, '2024-12-31 23:59:59', 1, 1),
-('João Pessoa Tech', '78.901.234/0001-67', 'contato@jptech.com.br', 'jptech', 'senha123', 1700, 17, '2024-12-31 23:59:59', 1, 1),
-('Maceió Reparos', '89.012.345/0001-78', 'contato@maceioreparos.com.br', 'maceioreparos', 'senha123', 1800, 18, '2024-12-31 23:59:59', 1, 1),
-('Aracaju Assist', '90.123.456/0001-89', 'contato@aracajuassist.com.br', 'aracajuassist', 'senha123', 1900, 19, '2024-12-31 23:59:59', 1, 1),
-('Cuiabá Tecnologia', '01.234.567/0001-90', 'contato@cuiabatecnologia.com.br', 'cuiabatecnologia', 'senha123', 2000, 20, '2024-12-31 23:59:59', 1, 1),
-('Belo Horizonte Celulares', '12.345.678/0001-02', 'contato@bhcelulares.com.br', 'bhcelulares', 'senha123', 2100, 21, '2024-12-31 23:59:59', 1, 1),
-('São Luís Reparos', '23.456.789/0001-13', 'contato@slreparos.com.br', 'slreparos', 'senha123', 2200, 22, '2024-12-31 23:59:59', 1, 1),
-('Teresina Assist', '34.567.890/0001-24', 'contato@teresinaassist.com.br', 'teresinaassist', 'senha123', 2300, 23, '2024-12-31 23:59:59', 1, 1),
-('Fortaleza Tech', '45.678.901/0001-35', 'contato@fortalezatech.com.br', 'fortalezatech', 'senha123', 2400, 24, '2024-12-31 23:59:59', 1, 1),
-('Recife Celulares', '56.789.012/0001-46', 'contato@recifecelulares.com.br', 'recifecelulares', 'senha123', 2500, 25, '2024-12-31 23:59:59', 1, 1),
-('Salvador Tech', '67.890.123/0001-57', 'contato@salvadortech.com.br', 'salvadortech', 'senha123', 2600, 26, '2024-12-31 23:59:59', 1, 1),
-('Porto Velho Assist', '78.901.234/0001-68', 'contato@portovelhoassist.com.br', 'portovelhoassist', 'senha123', 2700, 27, '2024-12-31 23:59:59', 1, 1),
-('Boa Vista Reparos', '89.012.345/0001-79', 'contato@boavistareparos.com.br', 'boavistareparos', 'senha123', 2800, 28, '2024-12-31 23:59:59', 1, 1),
-('Macapá Tecnologia', '90.123.456/0001-80', 'contato@macapatecnologia.com.br', 'macapatecnologia', 'senha123', 2900, 29, '2024-12-31 23:59:59', 1, 1),
-('Rio Branco Celulares', '01.234.567/0001-91', 'contato@riobrancocelulares.com.br', 'riobrancocelulares', 'senha123', 3000, 30, '2024-12-31 23:59:59', 1, 1),
-('Palmas Assist', '12.345.678/0001-03', 'contato@palmasassist.com.br', 'palmasassist', 'senha123', 3100, 31, '2024-12-31 23:59:59', 1, 1),
-('Maceió Tech', '23.456.789/0001-14', 'contato@maceiotech.com.br', 'maceiotech', 'senha123', 3200, 32, '2024-12-31 23:59:59', 1, 1),
-('João Pessoa Celulares', '34.567.890/0001-25', 'contato@jpcelulares.com.br', 'jpcelulares', 'senha123', 3300, 33, '2024-12-31 23:59:59', 1, 1),
-('Natal Reparos', '45.678.901/0001-36', 'contato@natalreparos.com.br', 'natalreparos', 'senha123', 3400, 34, '2024-12-31 23:59:59', 1, 1),
-('Teresina Tech', '56.789.012/0001-47', 'contato@teresinatech.com.br', 'teresinatech', 'senha123', 3500, 35, '2024-12-31 23:59:59', 1, 1),
-('São Luís Assist', '67.890.123/0001-58', 'contato@slassist.com.br', 'slassist', 'senha123', 3600, 36, '2024-12-31 23:59:59', 1, 1),
-('Belém Tech', '78.901.234/0001-69', 'contato@belemtech.com.br', 'belemtech', 'senha123', 3700, 37, '2024-12-31 23:59:59', 1, 1),
-('Manaus Celulares', '89.012.345/0001-70', 'contato@manauscelulares.com.br', 'manauscelulares', 'senha123', 3800, 38, '2024-12-31 23:59:59', 1, 1),
-('Porto Alegre Tech', '90.123.456/0001-81', 'contato@poatech.com.br', 'poatech', 'senha123', 3900, 39, '2024-12-31 23:59:59', 1, 1),
-('Curitiba Celulares', '01.234.567/0001-92', 'contato@curitibacelulares.com.br', 'curitibacelulares', 'senha123', 4000, 40, '2024-12-31 23:59:59', 1, 1),
-('Brasília Assist', '12.345.678/0001-04', 'contato@brasiliaassist.com.br', 'brasiliaassist', 'senha123', 4100, 41, '2024-12-31 23:59:59', 1, 1),
-('Fortaleza Celulares', '23.456.789/0001-15', 'contato@fortalezacelulares.com.br', 'fortalezacelulares', 'senha123', 4200, 42, '2024-12-31 23:59:59', 1, 1),
-('Recife Tech', '34.567.890/0001-26', 'contato@recifetech.com.br', 'recifetech', 'senha123', 4300, 43, '2024-12-31 23:59:59', 1, 1),
-('Salvador Assist', '45.678.901/0001-37', 'contato@salvadorassist.com.br', 'salvadorassist', 'senha123', 4400, 44, '2024-12-31 23:59:59', 1, 1),
-('Belo Horizonte Reparos', '56.789.012/0001-48', 'contato@bhreparos.com.br', 'bhreparos', 'senha123', 4500, 45, '2024-12-31 23:59:59', 1, 1),
-('Rio de Janeiro Tech', '67.890.123/0001-59', 'contato@rjtech.com.br', 'rjtech', 'senha123', 4600, 46, '2024-12-31 23:59:59', 1, 1),
-('São Paulo Celulares', '78.901.234/0001-60', 'contato@spcelulares.com.br', 'spcelulares', 'senha123', 4700, 47, '2024-12-31 23:59:59', 1, 1),
-('Campinas Tech', '89.012.345/0001-71', 'contato@campinastech.com.br', 'campinastech', 'senha123', 4800, 48, '2024-12-31 23:59:59', 1, 1),
-('Goiânia Assist', '90.123.456/0001-82', 'contato@goianiaassist.com.br', 'goianiaassist', 'senha123', 4900, 49, '2024-12-31 23:59:59', 1, 1),
-('Vitória Tech', '01.234.567/0001-93', 'contato@vitoriatech.com.br', 'vitoriatech', 'senha123', 5000, 50, '2024-12-31 23:59:59', 1, 1);
+('Loja SP', '12345678000100', 'loja1@exemplo.com', 'loja1', '$2b$10$t2qm1LE0RU6H2IfZnk8DZuYrK.FE2A/kBYC0FeMws16MZC4ENjxJy', 101, 1, '2026-12-31 23:59:59', 1, 1),
+('Loja RJ', '23456789000111', 'loja2@exemplo.com', 'loja2', '$2b$10$Ooz1h3MEZPJn9aC1SBdQt.k9dmUrARAA7h7AylfQZJ61/4IIIWqF.', 202, 2, '2025-11-30 23:59:59', 0, 1),
+('Loja MG', '34567890000122', 'loja3@exemplo.com', 'loja3', '$2b$10$O8zdwQ5hjka3lcFCj5CAqO4dQOML4zXr0MbzN57Q/2z6LduzmmLBq', 303, 3, '2025-10-31 23:59:59', 1, 1),
+('Loja RS', '45678900000133', 'loja4@exemplo.com', 'loja4', '$2b$10$d2CBGwdESHtrCa/ma3y4n.KoNb8VFMh.BaMCX.DywGwElY2H6ZdbS', 404, 4, '2025-09-30 23:59:59', 0, 0),
+('Loja BA', '56789000000144', 'loja5@exemplo.com', 'loja5', '$2b$10$1egzfPYEygcFm15.Q7vAqeftbyzHlxlKQH.cOP8ejZ.osTozup4H6', 505, 5, '2025-08-31 23:59:59', 1, 1);
+
+INSERT INTO `store_workers` (`name`, `username`, `user_password`, `email`, `store_id`) VALUES
+('Lucas Rocha', 'lucasr', '$2b$10$FZibRXsQpXItn2AEzR1wdeglVWhuxDYl53d18ugiM06EvLkWKe1vS', 'lucasr@example.com', 1),
+('Juliana Prado', 'julianap', '$2b$10$VGM7wwZqg2pxRFK2nbOPq.xYb/819Y2GN50ZQPC/m6Lp6QekK2Xry', 'julianap@example.com', 2),
+('Marcos Vinícius', 'marcosv', '$2b$10$.FMxoZFGte2lFFRG3WvpnuPP3H8s5U4ZGXxB9L097zPgZyeNhC94i', 'marcosv@example.com', 3),
+('Fernanda Lima', 'fernandal', '$2b$10$8OhxPnPlxR3qIP7.Vc/aJOkK48MWK3IkdkoFt3xuZvpkXnQ1ovqrm', 'fernandal@example.com', 4),
+('Paulo Sérgio', 'paulos', '$2b$10$s6kiyxuI9Kj7K9TSDISBoekRlWfIo141DqvjpKrJ6owJTub7Ws.JW', 'paulos@example.com', 5);
+
+
+
+INSERT INTO `service_orders` (`user_device_id`, `worker_id`, `store_id`, `created_at`, `completed_at`, `feedback`, `warranty`, `cost`, `work`, `status`, `deadline`, `problem`) VALUES
+(1, 1, 1, NOW(), NULL, NULL, 6, 250.00, 50.00, 'pending', '2025-06-15', 'Tela quebrada'),
+(2, 2, 2, '2025-06-01 10:00:00', '2025-06-01 14:00:00', 10, 12, 180.00, 30.00, 'completed', '2025-06-05', 'Bateria descarregando'),
+(3, 3, 3, NOW(), NULL, NULL, NULL, NULL, NULL, 'pending', '2025-06-20', 'Celular não liga'),
+(4, 4, 4, NOW(), NULL, NULL, 3, 400.00, 80.00, 'in progress', '2025-06-30', 'Sem sinal'),
+(5, 5, 5, NOW(), NULL, NULL, 6,150.00, 50.00, 'pending', '2025-07-01', 'Aquecimento excessivo');
+
+
+INSERT INTO `order_logs` (`service_order_id`, `cost`, `work`, `status`, `deadline`, `problem`, `log_date`) VALUES
+(1, '250.00', '30.00', 'pending', '2025-06-15', 'Tela quebrada', NOW()),
+(2, '180.00', 50.00, 'completed', '2025-06-05', 'Bateria descarregando', NOW()),
+(3, '0.00', '0.00', 'pending', '2025-06-20', 'Celular não liga', NOW()),
+(4, '400.00', '20.00', 'in progress', '2025-06-30', 'Sem sinal', NOW()),
+(5, '150.00', '50.00', 'pending', '2025-07-01', 'Aquecimento excessivo', NOW());
+
+
+INSERT INTO `admins` (`username`, `user_password`, `email`) VALUES
+('admin1', '$2b$10$lAVdOCvPG6yU7ex5CkzH/.tNE9cF0B8sofOa1rWT0zrVrikqTczju', 'admin1@example.com'),
+('admin2', '$2b$10$Wk0ffpsiNCMjYkF8ImoEH.GnJ7xvoWbhKIwc3Qodp0MHnRGq.BHJC', 'admin2@example.com'),
+('admin3', '$2b$10$ui5HCdRYzQBTcQJn9OTxbuiTdKU2itwo4etL1K7IIcm5MkUcgH6tC', 'admin3@example.com'),
+('superuser', '$2b$10$/RuHLET9CgvG.UatYu4E2eqFMVu6gNDKoW6f4jROz34ZLF483y60q', 'superuser@example.com'),
+('Luw', '$2b$10$FzEoMUDw7oq1DK8RV.spIeNeS.7MjtTc/M7QLpRDh74w7iL54T62y', 'luisflavio360@gmail.com'),
+('gestor_ti', '$2b$10$2.j7Z6docjZhiC5avVUw5O/iY.eQ.Car5VH7vrOoUQaLTuKaIt3Nu', 'gestor_ti@example.com');
+
+
+INSERT INTO `pictures` (`service_order_id`, `path`) VALUES
+(1, '/uploads/tela_quebrada.jpg'),
+(2, '/uploads/bateria_ruim.jpg'),
+(3, '/uploads/celular_morto.jpg'),
+(4, '/uploads/placa_queimada.jpg'),
+(5, '/uploads/sujeira_interna.jpg');
+
+
+
+
+
+
+
 
