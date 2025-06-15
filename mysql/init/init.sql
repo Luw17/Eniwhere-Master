@@ -64,7 +64,6 @@ CREATE TABLE IF NOT EXISTS `stores` (
   PRIMARY KEY (`id`),
   UNIQUE (`document`),
   UNIQUE (`username`),
-  UNIQUE (`user_password`),
   FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`)
 ) ENGINE = InnoDB;
 
@@ -183,18 +182,18 @@ INSERT INTO `store_workers` (`name`, `username`, `user_password`, `email`, `stor
 
 INSERT INTO `service_orders` (`user_device_id`, `worker_id`, `store_id`, `created_at`, `completed_at`, `feedback`, `warranty`, `cost`, `work`, `status`, `deadline`, `problem`) VALUES
 (1, 1, 1, NOW(), NULL, NULL, 6, 250.00, 50.00, 'pending', '2025-06-15', 'Tela quebrada'),
-(2, 2, 2, '2025-06-01 10:00:00', '2025-06-01 14:00:00', 10, 12, 180.00, 'Troca de bateria', 'completed', '2025-06-05', 'Bateria descarregando'),
+(2, 2, 2, '2025-06-01 10:00:00', '2025-06-01 14:00:00', 10, 12, 180.00, 30.00, 'completed', '2025-06-05', 'Bateria descarregando'),
 (3, 3, 3, NOW(), NULL, NULL, NULL, NULL, NULL, 'pending', '2025-06-20', 'Celular não liga'),
 (4, 4, 4, NOW(), NULL, NULL, 3, 400.00, 80.00, 'in progress', '2025-06-30', 'Sem sinal'),
 (5, 5, 5, NOW(), NULL, NULL, 6,150.00, 50.00, 'pending', '2025-07-01', 'Aquecimento excessivo');
 
 
 INSERT INTO `order_logs` (`service_order_id`, `cost`, `work`, `status`, `deadline`, `problem`, `log_date`) VALUES
-(1, '250.00', 'Troca de tela', 'pending', '2025-06-15', 'Tela quebrada', NOW()),
-(2, '180.00', 'Troca de bateria', 'completed', '2025-06-05', 'Bateria descarregando', NOW()),
-(3, '0.00', 'Diagnóstico', 'pending', '2025-06-20', 'Celular não liga', NOW()),
-(4, '400.00', 'Troca de placa', 'in progress', '2025-06-30', 'Sem sinal', NOW()),
-(5, '150.00', 'Limpeza e manutenção', 'pending', '2025-07-01', 'Aquecimento excessivo', NOW());
+(1, '250.00', '30.00', 'pending', '2025-06-15', 'Tela quebrada', NOW()),
+(2, '180.00', 50.00, 'completed', '2025-06-05', 'Bateria descarregando', NOW()),
+(3, '0.00', '0.00', 'pending', '2025-06-20', 'Celular não liga', NOW()),
+(4, '400.00', '20.00', 'in progress', '2025-06-30', 'Sem sinal', NOW()),
+(5, '150.00', '50.00', 'pending', '2025-07-01', 'Aquecimento excessivo', NOW());
 
 
 INSERT INTO `admins` (`username`, `user_password`, `email`) VALUES
@@ -307,7 +306,7 @@ INSERT INTO `addresses` (`postal_code`, `country`, `state`, `city`, `neighborhoo
 ('90100-090', 'Brasil', 'RS', 'Porto Alegre', 'Centro Histórico', 'Rua dos Andradas, 1000');
 
 INSERT INTO `app_users` (`document`, `name`, `email`, `phone`, `username`, `user_password`, `number`, `address_id`, `active`) VALUES
-('11122233344', 'João Silva', 'joao.silva@email.com', '11987654321', 'joaosilva', 'senha123', 'Apto 101', 1, 1),
+('11122233344', 'João Silva', 'joao.silva@email.com', '11987654321', 'joaosilvaa', 'senha1234a', 'Apto 101', 1, 1),
 ('22233344455', 'Maria Oliveira', 'maria.oliveira@email.com', '21987654321', 'mariaoliveira', 'senha123', 'Casa 2', 2, 1),
 ('33344455566', 'Carlos Souza', 'carlos.souza@email.com', '31987654321', 'carlossouza', 'senha123', 'Bloco A', 3, 1),
 ('44455566677', 'Ana Costa', 'ana.costa@email.com', '41987654321', 'anacosta', 'senha123', 'Sala 10', 4, 1),
