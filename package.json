@@ -6,7 +6,8 @@
     "update": "git submodule update --remote --merge && docker-compose up --build -d",
     "start": "docker-compose up",
     "stop": "docker-compose down",
-    "reset": "docker-compose down -v && docker-compose up --build"
+    "reset": "docker-compose down -v && docker-compose up --build",
+    "seed-backend": "cd backend && npm run seed"
   },
   "dependencies": {
     "react": "^19.1.0",
