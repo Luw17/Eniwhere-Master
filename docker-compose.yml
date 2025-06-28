@@ -26,7 +26,6 @@ services:
       - redis-data:/data
     restart: always
 
-
   frontend:
     build:
       context: ./frontend
@@ -58,10 +57,10 @@ services:
     restart: always
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 11675800
-      MYSQL_DATABASE: eniwhere_db
-      MYSQL_USER: eniwhere_user
-      MYSQL_PASSWORD: 11675800
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3307:3306"
     volumes:
@@ -71,7 +70,7 @@ services:
     image: redis/redisinsight:latest
     container_name: redisinsight
     ports:
-    - "5540:5540"
+      - "5540:5540"
     restart: always
 
 volumes:
