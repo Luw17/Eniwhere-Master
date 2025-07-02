@@ -10,7 +10,9 @@ rode npm run setup
 
 rode npm run start
 
-em outro terminal rode npm run seed-backend para gerar os dados inicias 
+em outro terminal rode cd backend e npm install
+
+depois cd .. e npm run seed-backend para gerar os dados inicias 
 
 usuario:Renove 
 
