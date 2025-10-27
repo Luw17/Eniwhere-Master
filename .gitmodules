@@ -7,3 +7,6 @@
 [submodule "landingpage"]
 	path = landingpage
 	url = https://github.com/Luw17/Enigma-landingpage.git
+[submodule "enithing-backend"]
+	path = enithing-backend
+	url = https://github.com/Luw17/Enithing-backend.git
