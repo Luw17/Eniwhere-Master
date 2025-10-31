@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  backend:
+    image: eniwhere.azurecr.io/backend-app:v3
+    environment:
+      - NODE_ENV=production
+
+  enithing-backend:
+    image: eniwhere.azurecr.io/enithing-backend:v3
+    environment:
+      - NODE_ENV=production
+
+  frontend:
+    image: eniwhere.azurecr.io/frontend-app:v3
+    environment:
+      - NODE_ENV=production
+
+  landingpage:
+    image: eniwhere.azurecr.io/landingpage:v3
+    environment:
+      - NODE_ENV=production
+
+  db:
+    image: eniwhere.azurecr.io/eniwhere-mysql:v1

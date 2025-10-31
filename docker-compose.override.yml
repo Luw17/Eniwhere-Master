@@ -1,0 +1,66 @@
+# docker-compose.override.yml (PARA DESENVOLVIMENTO LOCAL)
+version: '3.9'
+
+services:
+  backend:
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+
+  enithing-backend:
+    ports:
+      - "3004:3000"
+    volumes:
+      - ./enithing-backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+
+  redis:
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  frontend:
+    # AJUSTE AQUI: Diz ao Docker para parar a construção no estágio 'development'
+    build:
+      context: ./frontend
+      target: development
+    ports:
+      - "3000:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  landingpage:
+    # AJUSTE AQUI: Diz ao Docker para parar a construção no estágio 'development'
+    build:
+      context: ./landingpage
+      target: development
+    ports:
+      - "3002:5173"
+    volumes:
+      - ./landingpage:/app
+      - /app/node_modules
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    ports:
+      - "5540:5540"
+    restart: always
+
+volumes:
+  redis-data:
