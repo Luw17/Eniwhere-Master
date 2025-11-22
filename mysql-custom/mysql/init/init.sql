@@ -131,6 +131,59 @@ CREATE TABLE IF NOT EXISTS `pictures` (
   FOREIGN KEY (`service_order_id`) REFERENCES `service_orders` (`id`)
 ) ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `store_id` INT NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
+  `description` TEXT NULL,
+  `sku` VARCHAR(50) NULL,
+  `price` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  `cost_price` DECIMAL(10,2) NULL DEFAULT 0.00,
+  `stock_quantity` INT NOT NULL DEFAULT 0,
+  `active` TINYINT NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`)
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `sales` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `store_id` INT NOT NULL,
+  `worker_id` INT NOT NULL,
+  `customer_id` INT NULL,
+  `service_order_id` INT NULL,
+  `total_amount` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  `payment_method` VARCHAR(50) NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`),
+  FOREIGN KEY (`worker_id`) REFERENCES `store_workers` (`id`),
+  FOREIGN KEY (`customer_id`) REFERENCES `app_users` (`id`),
+  FOREIGN KEY (`service_order_id`) REFERENCES `service_orders` (`id`)
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `sale_items` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `sale_id` INT NOT NULL,
+  `product_id` INT NOT NULL,
+  `quantity` INT NOT NULL DEFAULT 1,
+  `unit_price` DECIMAL(10,2) NOT NULL,
+  `subtotal` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`sale_id`) REFERENCES `sales` (`id`),
+  FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+) ENGINE = InnoDB;
+
+DELIMITER $$
+
+CREATE TRIGGER `decrease_stock_on_sale` AFTER INSERT ON `sale_items`
+FOR EACH ROW
+BEGIN
+    UPDATE `products`
+    SET `stock_quantity` = `stock_quantity` - NEW.`quantity`
+    WHERE `id` = NEW.`product_id`;
+END$$
+
+DELIMITER ;
 
 INSERT INTO `devices` (`device_name`, `model`, `brand`, `active`) VALUES
 ('Smartphone', 'Galaxy S21', 'Samsung', 1),

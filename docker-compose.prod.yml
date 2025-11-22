@@ -1,25 +1,50 @@
+# docker-compose.prod.yml
 version: '3.9'
 
 services:
   backend:
-    image: eniwhere.azurecr.io/backend-app:v3
+    image: eniwhere.azurecr.io/backend-app:v10
     environment:
       - NODE_ENV=production
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CRYPTO_SECRET=${CRYPTO_SECRET}
 
   enithing-backend:
-    image: eniwhere.azurecr.io/enithing-backend:v3
+    image: eniwhere.azurecr.io/enithing-backend:v10
     environment:
       - NODE_ENV=production
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CRYPTO_SECRET=${CRYPTO_SECRET}
 
   frontend:
-    image: eniwhere.azurecr.io/frontend-app:v3
+    image: eniwhere.azurecr.io/frontend-app:v10
     environment:
       - NODE_ENV=production
 
   landingpage:
-    image: eniwhere.azurecr.io/landingpage:v3
+    image: eniwhere.azurecr.io/landingpage:v10
     environment:
       - NODE_ENV=production
 
   db:
-    image: eniwhere.azurecr.io/eniwhere-mysql:v1
+    image: eniwhere.azurecr.io/eniwhere-mysql:v1.2
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+
+  redis:
+    image: redis:7-alpine
