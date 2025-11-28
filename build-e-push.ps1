@@ -1,7 +1,7 @@
 # build-e-push.ps1
 
 $registry = "eniwhere.azurecr.io"
-$tag = "v10"
+$tag = "v11"
 
 $ErrorActionPreference = "Stop"
 
